@@ -64,6 +64,29 @@ userSchema.methods.generateAuthToken = async function() {
 }
 
 
+/**
+ * methods finds searched user by provided credentials
+ * @param email
+ * @param password
+ * @returns user from db if finds corresponding record
+ */
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        // throw new Error('Unable to login');
+        throw {message: 'Unable to login', type: 'genericError'};
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+        throw new Error('Unable to login');
+    }
+
+    return user;
+}
+
 
 /**
  * takes care of saving password in hashed form

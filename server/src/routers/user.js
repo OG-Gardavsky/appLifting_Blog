@@ -25,15 +25,15 @@ router.post(baseUrl, async (req, res) => {
 
         if ('name' in e && e.name === 'ValidationError') {
 
-            if (e.name === 'ValidationError') {
-                res.status(400).send(e);
+            if (e.errors.password.kind === 'minlength') {
+                return  res.status(400).send({error: 'Password is too short'});
             }
+
+            res.status(400).send(e);
 
         } else {
             res.status(500).send();
         }
-
-
 
     }
 });
@@ -46,9 +46,13 @@ router.post(`${baseUrl}/login`, async (req, res) => {
 
     try {
 
-        res.status(201).send({message: 'jsme tam'});
+        const user = await User.findByCredentials(req.body.email.toLowerCase(), req.body.password);
+        const token = await user.generateAuthToken();
+        user.save();
+        res.send({user, token});
+
     } catch (e) {
-        res.status(400).send({error: ''});
+        res.status(400).send({error: 'Unable to login'});
     }
 });
 
