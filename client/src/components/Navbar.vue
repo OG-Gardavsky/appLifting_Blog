@@ -1,26 +1,19 @@
 <template>
     <div>
-
-
-        <ul class="nav">
+        <div class="nav">
 
             <span id="rightLinks" class="d-flex flex-row">
                 <img alt="Vue logo" src="../assets/cat.png" width="60px">
-
-                <span> <router-link to="/">Recent Articles</router-link> </span>
-
-                <span> <router-link to="/about">About</router-link> </span>
-
+                <router-link to="/" class="routeLink">Recent Articles</router-link>
+                <router-link to="/about" class="routeLink">About</router-link>
             </span>
 
-            <li class="nav-item d-flex flex-row">
-                <a class="nav-link" href="#">Log in</a>
+            <router-link to="/login">
+                <span class="routeLink">Log in</span>
                 <i class="fas fa-arrow-right"></i>
-            </li>
+            </router-link>
 
-        </ul>
-
-
+        </div>
     </div>
 </template>
 
@@ -40,19 +33,15 @@ export default {
             margin: 0 auto;
             justify-content: space-between;
 
-            #rightLinks {
-
-
-                //&.router-link-exact-active
-
-                span {
-                    margin: 10px;
-                }
-
-
+            .routeLink {
+                margin: 10px;
             }
 
-
+            #rightLinks {
+                img {
+                    margin: 10px;
+                }
+            }
 
             .fa-arrow-right {
                 margin: 10px 0;
