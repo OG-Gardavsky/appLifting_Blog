@@ -7,13 +7,17 @@
 
                 <h1 class="d-flex">Log in</h1>
 
+                <!--       email         -->
                 <div class="form-group">
                     <label class="d-flex">Email</label>
-                    <input type="email" class="form-control" v-model="email" placeholder="me@example.com" >
+                    <input type="text" class="form-control" v-model="email" placeholder="me@example.com" />
+<!--                    TODO -->
+<!--                    <div class="invalid-feedback"></div>-->
                 </div>
+
                 <div class="form-group">
                     <label class="d-flex">Password</label>
-                    <input type="password" class="form-control" v-model="password" placeholder="***********" >
+                    <input type="password" class="form-control" v-model="password" placeholder="***********" />
                 </div>
 
                 <!--      login button          -->
@@ -52,8 +56,37 @@ export default {
         }
     },
     methods: {
-        login() {
-            this.sendRequest('users/login', 'POST', false, {neco: 'neco'})
+        async login() {
+            if (this.email === null || this.password === null) {
+                this.genericError.display = true;
+                this.genericError.text = 'Please fill both email and password'
+                return
+            }
+
+            const body = {
+                email: this.email,
+                password: this.password
+            };
+
+            const res = await this.sendRequest('users/login', 'POST', false, body);
+
+            let responseBody;
+            if (res.status === 200) {
+                responseBody = await res.json();
+                localStorage.setItem('userToken', responseBody.token);
+                return;
+            }
+
+            try {
+                responseBody = await res.json();
+                if (responseBody.error) {
+                    this.setGenericError(this.genericError, true, responseBody.error);
+                }
+            } catch (e) {
+                this.setGenericError(this.genericError, true, 'Unable to login.');
+            }
+
+
         }
     }
 }

@@ -10,7 +10,11 @@ Vue.mixin({
         async sendRequest(url, method, requiresAuth, body = null) {
 
 
-            const headers = requiresAuth ? { Authorization: `Bearer ${localStorage.getItem('userToken')}`} : {};
+            const headers = {'Content-type': 'application/json'};
+            if (requiresAuth) {
+                headers.Authorization = `Bearer ${localStorage.getItem('userToken')}`;
+            }
+
             //what contains method for sending http request
             const methodObject = body === null ? {method, headers} : { method, headers, body: JSON.stringify(body)};
 
@@ -18,6 +22,10 @@ Vue.mixin({
 
 
             return res;
+        },
+        setGenericError(incomingError ,visible, text) {
+            incomingError.display = visible;
+            incomingError.text = text;
         }
     }
 
