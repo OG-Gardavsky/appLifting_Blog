@@ -25,9 +25,6 @@ router.post(baseUrl, async (req, res) => {
 
         if ('name' in e && e.name === 'ValidationError') {
 
-            if (e.errors.password.kind === 'minlength') {
-                return  res.status(400).send({error: 'Password is too short'});
-            }
 
             res.status(400).send(e);
 

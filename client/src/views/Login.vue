@@ -20,13 +20,11 @@
                     <input type="password" class="form-control" v-model="password" placeholder="***********" />
                 </div>
 
-                <!--      login button          -->
+                <!--      login button  + link to sign up        -->
                 <div class="d-flex flex-row justify-content-between">
                     <router-link to="/signup">
-                        <button type="submit" class="btn btn-secondary" >sign up</button>
+                        <button class="btn btn-secondary">Sign up</button>
                     </router-link>
-
-
                     <button type="submit" class="btn btn-primary" @click="login">Log in</button>
                 </div>
 
@@ -45,6 +43,7 @@
 
 <script>
 import Navbar from "@/components/Navbar";
+import router from "@/router";
 export default {
     name: "Login",
     components: {
@@ -79,7 +78,7 @@ export default {
             if (res.status === 200) {
                 responseBody = await res.json();
                 localStorage.setItem('userToken', responseBody.token);
-                return;
+                return router.push('/administration');
             }
 
             try {
