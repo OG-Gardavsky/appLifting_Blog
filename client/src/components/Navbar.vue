@@ -17,8 +17,8 @@
 
 
             <span id="loggedUserLinks" class="d-flex flex-row" v-if="authenticated">
-                <router-link to="/" class="routeLink text-muted">My Articles</router-link>
-                <router-link to="/about" class="routeLink">Create Article</router-link>
+                <router-link to="/administration" class="routeLink text-muted">My Articles</router-link>
+                <router-link to="/createArticle" class="routeLink">Create Article</router-link>
                 <img src="../assets/cat.png" alt="Avatar" class="avatar">
             </span>
 

@@ -5,6 +5,7 @@ import Login from "@/views/Login";
 import About from "@/views/About";
 import Signup from "@/views/Signup";
 import Administration from "@/views/Administration";
+import CreateArticle from "@/views/CreateArticle";
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/administration',
         name: 'Administration',
         component: Administration
+    },
+    {
+        path: '/createArticle',
+        name: 'CreateArticle',
+        component: CreateArticle
     }
 ]
 
