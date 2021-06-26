@@ -64,13 +64,13 @@ Vue.mixin({
                     }
 
                 } catch (e) {
-                    return false;
+                    areCredentialsOk = false;
                 }
             }
 
 
             if (locationTopush && !areCredentialsOk) {
-                return router.push(locationTopush);
+                await router.push(locationTopush);
             }
 
             return areCredentialsOk;
