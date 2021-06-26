@@ -22,8 +22,10 @@
 
     display: flex;
 
+    margin-bottom: 30px;
+
     h1 {
-        margin: 10px;
+        margin: 10px 10px 10px 0;
     }
     button {
         margin: 10px;

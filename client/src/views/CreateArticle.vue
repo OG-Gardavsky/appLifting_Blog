@@ -5,13 +5,13 @@
 
             <div class="adminHeadline">
                 <h1>Create new Article</h1>
-                <button class="btn btn-primary">Publish Article</button>
+                <button class="btn btn-primary" @click="saveArticle()">Publish Article</button>
             </div>
 
             <form>
                 <div class="form-group">
                     <label class="d-flex">Article Title</label>
-                    <input type="password" class="form-control" v-model="title" placeholder="My first article" />
+                    <input type="text" class="form-control" v-model="title" placeholder="My first article" />
                 </div>
 
                 <div class="form-group">
@@ -21,17 +21,22 @@
 
                 <div class="form-group">
                     <label class="d-flex">Perex</label>
-                    <textarea class="form-control"  v-model="perex" placeholder="Leading Paragraph" />
+                    <textarea class="form-control" id="perex"  v-model="perex" placeholder="Leading Paragraph" rows="4"/>
                 </div>
 
                 <div class="form-group">
                     <label class="d-flex">Content</label>
-                    <textarea class="form-control"  v-model="content" placeholder="Supports markdown. Yay!" />
+                    <textarea class="form-control" id="content"  v-model="content" placeholder="Supports markdown. Yay!" rows="18"/>
                 </div>
-
-
             </form>
 
+
+            <div style="margin-top: 30px" v-if="![title, content].includes(null)">
+                <h2 class="d-flex">Preview</h2>
+                <hr />
+                <h1 class="d-flex">{{title}}</h1>
+                <vue-markdown :source="content" class="d-flex"/>
+            </div>
 
 
 
@@ -41,20 +46,34 @@
 
 <script>
 import Navbar from "@/components/Navbar";
+import VueMarkdown from 'vue-markdown-render';
+
 export default {
     name: "CreateArticle",
-        components: {Navbar},
+        components: {
+            Navbar,
+            VueMarkdown
+        },
     data() {
         return {
             title: null,
             perex: null,
             content: null
         }
+    },
+    methods: {
+        saveArticle() {
+            console.log(this.content);
+        }
     }
 
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+    #textarea {
+        height: 500px;
+    }
 
 </style>
