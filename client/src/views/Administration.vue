@@ -1,7 +1,17 @@
 <template>
     <div>
         <Navbar />
-        <h1>Admin page</h1>
+        <div class="main">
+            <div class="adminHeadline">
+                <h1>My articles</h1>
+
+                <router-link to="/createArticle" >
+                    <button class="btn btn-primary">Create new Article</button>
+                </router-link>
+            </div>
+
+        </div>
+
     </div>
 </template>
 
@@ -16,6 +26,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+
 
 </style>

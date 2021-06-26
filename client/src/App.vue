@@ -13,4 +13,22 @@
   color: #2c3e50;
 }
 
+.main {
+    max-width: 60%;
+    margin: 30px auto;
+}
+
+.adminHeadline {
+
+    display: flex;
+
+    h1 {
+        margin: 10px;
+    }
+    button {
+        margin: 10px;
+    }
+
+}
+
 </style>
