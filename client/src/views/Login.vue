@@ -92,6 +92,13 @@ export default {
 
 
         }
+    },
+    async created() {
+        const authorized = await this.checkCredentials();
+
+        if (authorized) {
+            await router.push('/administration');
+        }
     }
 }
 </script>

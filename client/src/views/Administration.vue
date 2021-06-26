@@ -9,7 +9,10 @@
 import Navbar from "@/components/Navbar";
 export default {
     name: "Administration",
-    components: {Navbar}
+    components: {Navbar},
+    created() {
+        this.checkCredentials('/');
+    }
 }
 </script>
 

@@ -8,10 +8,19 @@
                 <router-link to="/about" class="routeLink">About</router-link>
             </span>
 
-            <router-link to="/login">
+            <router-link to="/login" v-if="userInfo !== null">
                 <span class="routeLink">Log in</span>
                 <i class="fas fa-arrow-right"></i>
             </router-link>
+
+
+<!--            <router-link to="/login" >-->
+<!--                <span class="routeLink">Log in</span>-->
+<!--                <i class="fas fa-arrow-right"></i>-->
+<!--            </router-link>-->
+
+<!--            <img src="../assets/logo.png" alt="Avatar" class="avatar">-->
+<!--            <b-avatar variant="info" src="../assets/logo.png"></b-avatar>-->
 
         </div>
     </div>
@@ -47,7 +56,16 @@ export default {
                 margin: 10px 0;
             }
 
+            .avatar {
+                vertical-align: middle;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+
         }
+
+
     }
 
 
