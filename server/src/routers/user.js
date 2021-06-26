@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
-
+const auth = require('../middleware/auth');
 const router = new express.Router();
 
 const baseUrl = '/api/users';
@@ -25,15 +25,12 @@ router.post(baseUrl, async (req, res) => {
 
         if ('name' in e && e.name === 'ValidationError') {
 
-            if (e.name === 'ValidationError') {
-                res.status(400).send(e);
-            }
+
+            res.status(400).send(e);
 
         } else {
             res.status(500).send();
         }
-
-
 
     }
 });
@@ -46,23 +43,43 @@ router.post(`${baseUrl}/login`, async (req, res) => {
 
     try {
 
-        res.status(201).send({message: 'jsme tam'});
+        const user = await User.findByCredentials(req.body.email.toLowerCase(), req.body.password);
+        const token = await user.generateAuthToken();
+        await user.save();
+        res.send({user, token});
+
     } catch (e) {
-        res.status(400).send({error: ''});
+        res.status(400).send({error: 'Unable to login'});
+    }
+});
+
+/**
+ * API return user info
+ */
+router.get(baseUrl, auth, async (req, res) => {
+    try{
+        res.status(200).send(req.user);
+
+    } catch (e) {
+        res.status(400).send(e);
     }
 });
 
 
+
 /**
- * API logs User out
+ * API logs out user by deleting current jwt token
  */
-router.post(`${baseUrl}/logout`, async (req, res) => {
-
+router.post(baseUrl + '/logout', auth, async (req, res) => {
     try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token !== req.token;
+        })
+        await req.user.save();
 
-        res.status(201).send({message: 'jsme tam'});
+        res.send();
     } catch (e) {
-        res.status(400).send({error: ''});
+        res.status(500).send();
     }
 });
 
