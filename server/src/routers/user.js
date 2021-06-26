@@ -66,16 +66,20 @@ router.get(baseUrl, auth, async (req, res) => {
 });
 
 
+
 /**
- * API logs User out
+ * API logs out user by deleting current jwt token
  */
-router.post(`${baseUrl}/logout`, async (req, res) => {
-
+router.post(baseUrl + '/logout', auth, async (req, res) => {
     try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token !== req.token;
+        })
+        await req.user.save();
 
-        res.status(201).send({message: 'jsme tam'});
+        res.send();
     } catch (e) {
-        res.status(400).send({error: ''});
+        res.status(500).send();
     }
 });
 

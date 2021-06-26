@@ -12,15 +12,25 @@
 
             <router-link to="/login" v-if="!authenticated">
                 <span class="routeLink">Log in</span>
-                <i class="fas fa-arrow-right"></i>
+                <i class="fas fa-arrow-right" />
             </router-link>
 
 
             <span id="loggedUserLinks" class="d-flex flex-row" v-if="authenticated">
                 <router-link to="/administration" class="routeLink text-muted">My Articles</router-link>
                 <router-link to="/createArticle" class="routeLink">Create Article</router-link>
-                <img src="../assets/cat.png" alt="Avatar" class="avatar">
+                <!-- dropdown for log out -->
+                <div class="dropdown">
+                <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="../assets/cat.png" alt="Avatar" class="avatar">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <span  class="dropdown-item" @click="logOut()">Log out</span>
+                </div>
+            </div>
             </span>
+
+
 
 
         </div>
@@ -28,11 +38,23 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
      name: "Navbar",
     data() {
          return {
              authenticated: false
+         }
+    },
+    methods: {
+         async logOut() {
+            const res = await this.sendRequest('/users/logout', 'POST', true);
+
+             if (res.status === 200 || res.status === 401) {
+                 localStorage.removeItem('userToken');
+                 await router.push('/');
+             }
          }
     },
     async created() {
