@@ -45,6 +45,20 @@ const userSchema = new mongoose.Schema({
 
 
 
+/**
+ * method removes password and tokens from response
+ * @returns userObject without confidential data
+ */
+userSchema.methods.toJSON = function() {
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.tokens;
+
+    return userObject;
+}
+
 
 /**
  * mwthod generates jwt token for user and saves it to database
