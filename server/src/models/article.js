@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 
-const userSchema = new mongoose.Schema({
+const articleSchema = new mongoose.Schema({
         title: {
             type: String,
             required: true
@@ -26,14 +26,5 @@ const userSchema = new mongoose.Schema({
 
 
 
-
-
-
-
-
-
-
-
-
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+const Article = mongoose.model('Article', articleSchema);
+module.exports = Article;

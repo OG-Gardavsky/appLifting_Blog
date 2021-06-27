@@ -44,6 +44,16 @@ const userSchema = new mongoose.Schema({
 );
 
 
+/**
+ * creates link to account
+ */
+userSchema.virtual('articles', {
+    ref: 'Article',
+    localField: '_id',
+    foreignField: 'owner'
+});
+
+
 
 /**
  * method removes password and tokens from response
