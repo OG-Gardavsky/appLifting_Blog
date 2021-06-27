@@ -5,7 +5,7 @@
 
             <div class="adminHeadline">
                 <h1>Create new Article</h1>
-                <button class="btn btn-primary" @click="saveArticle()">Publish Article</button>
+                <button class="btn btn-primary" @click="createArticle()">Publish Article</button>
             </div>
 
             <generic-error :display="genericError.display" :text="genericError.text" />
@@ -68,7 +68,7 @@ export default {
         }
     },
     methods: {
-        async saveArticle() {
+        async createArticle() {
             if ([this.title, this.perex, this.content].includes(null)) {
                 return this.setGenericError(this.genericError, true, 'Please fill "Title", "Perex" and "Content"');
             }

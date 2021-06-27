@@ -23,13 +23,19 @@
 
                 <tbody>
                     <tr :key="article._id" v-for="article in listOfArticles">
+                        <!--solve max length title + perex-->
                         <td>{{article.title}}</td>
                         <td>{{article.perex}}</td>
                         <td>42</td>
                         <td>
                             <div class="d-flex">
-                                <i class="far fa-edit actionIcon" />
-                                <i class="fas fa-trash actionIcon"></i>
+                                <span  @click="goEditArticle(article._id)">
+                                    <i class="far fa-edit actionIcon"/>
+                                </span>
+                                <span @click="deleteArticle(article._id, article.title)">
+                                    <i class="fas fa-trash actionIcon" />
+                                </span>
+
                             </div>
                         </td>
                     </tr>
@@ -45,6 +51,7 @@
 
 <script>
 import Navbar from "@/components/Navbar";
+import router from "@/router";
 export default {
     name: "Administration",
     components: {Navbar},
@@ -60,6 +67,19 @@ export default {
             if (res.status === 200) {
                 this.listOfArticles = await res.json();
             }
+        },
+        goEditArticle(articleId) {
+            router.push(`/editArticle?id=${articleId}`);
+        },
+        deleteArticle(articleId, articleTitle) {
+            const deleteConfirm = window.confirm(`wanna delete article '${articleTitle}'`)
+
+            if (!deleteConfirm) {
+                return;
+            }
+
+
+
         }
     },
     created() {
