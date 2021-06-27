@@ -35,7 +35,7 @@
                 <h2 class="d-flex">Preview</h2>
                 <hr />
                 <h1 class="d-flex">{{title}}</h1>
-                <vue-markdown :source="content" class="d-flex"/>
+                <vue-markdown :source="content" />
             </div>
 
 
@@ -46,7 +46,7 @@
 
 <script>
 import Navbar from "@/components/Navbar";
-import VueMarkdown from 'vue-markdown-render';
+import VueMarkdown from 'vue-markdown';
 
 export default {
     name: "CreateArticle",
