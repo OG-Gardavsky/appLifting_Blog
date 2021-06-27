@@ -71,13 +71,18 @@ export default {
         goEditArticle(articleId) {
             router.push(`/editArticle?id=${articleId}`);
         },
-        deleteArticle(articleId, articleTitle) {
+        async deleteArticle(articleId, articleTitle) {
             const deleteConfirm = window.confirm(`wanna delete article '${articleTitle}'`)
 
             if (!deleteConfirm) {
                 return;
             }
 
+            const res = await this.sendRequest(`/articles/id:${articleId}`, 'DELETE', true);
+
+            if (res.status === 200) {
+                await this.getListOfArticles();
+            }
 
 
         }

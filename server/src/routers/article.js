@@ -36,7 +36,7 @@ router.post(baseUrl, auth, async (req, res) => {
 
 
 /**
- * API return user info
+ * API returns article for logged user
  */
 router.get(`${baseUrl}/my`, auth, async (req, res) => {
     try{
@@ -52,6 +52,26 @@ router.get(`${baseUrl}/my`, auth, async (req, res) => {
         res.status(400).send(e);
     }
 });
+
+
+router.delete(`${baseUrl}/id::id`, auth, async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+
+        const article = await Article.findOne({_id, author: req.user._id});
+
+        if (!article) {
+            return res.status(404).send();
+        }
+
+        article.remove();
+
+        res.status(200).send();
+    } catch (e) {
+        res.status(500).send();
+    }
+})
 
 
 
