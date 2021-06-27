@@ -50,6 +50,28 @@ router.get(baseUrl, async (req, res) => {
 });
 
 /**
+ * API returns details about one article
+ */
+router.get(`${baseUrl}/id::id`, async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+        const account = await Article.findOne({_id});
+
+        if (!account) {
+            return res.status(404).send();
+        }
+
+        //TODO
+        //add check that authorId is not displayed - just name
+
+        res.send(account);
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+
+/**
  * API returns articles associated with logged user
  */
 router.get(`${baseUrl}/my`, auth, async (req, res) => {

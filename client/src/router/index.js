@@ -7,6 +7,7 @@ import Signup from "@/views/Signup";
 import Administration from "@/views/Administration";
 import CreateArticle from "@/views/CreateArticle";
 import EditArticle from "@/views/EditArticle";
+import ReadArticle from "@/views/ReadArticle";
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
         path: '/editArticle',
         name: 'EditArticle',
         component: EditArticle
+    },
+    {
+        path: '/readArticle',
+        name: 'ReadArticle',
+        component: ReadArticle
     }
 ]
 

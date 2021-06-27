@@ -5,9 +5,8 @@
             <h1>Recent articles</h1>
             <generic-error :display="genericError.display" :text="genericError.text" />
 
-            <a :key="article._id" v-for="article in listOfArticles"
-                href="#"
-               class="primary"
+            <router-link :to="`/readArticle?id=${article._id}`"
+                :key="article._id" v-for="article in listOfArticles"
             >
 
                 <div class="d-flex flex-column article">
@@ -17,7 +16,7 @@
                     <span>25.6.2021</span>
                 </span>
                 </div>
-            </a>
+            </router-link>
 
 
 
@@ -33,6 +32,7 @@
 
 import Navbar from "@/components/Navbar";
 import GenericError from "@/components/GenericError";
+import router from "@/router";
 export default {
     name: 'Home',
     components: {
@@ -51,6 +51,9 @@ export default {
             if (res.status === 200) {
                 this.listOfArticles = await res.json();
             }
+        },
+        goViewArticle(articleId) {
+            router.push(`readArticle?id=${articleId}`);
         }
     },
     created() {
