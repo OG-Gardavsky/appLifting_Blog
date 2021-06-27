@@ -31,6 +31,7 @@
             </form>
 
 
+            <!-- markdown preview -->
             <div style="margin-top: 30px" v-if="![title, content].includes(null)">
                 <h2 class="d-flex">Preview</h2>
                 <hr />
@@ -72,8 +73,6 @@ export default {
 
 <style scoped lang="scss">
 
-    #textarea {
-        height: 500px;
-    }
+
 
 </style>
