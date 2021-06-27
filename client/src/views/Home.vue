@@ -11,12 +11,9 @@
 
                 <div class="d-flex flex-row article">
 
+                    <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250">
 
-                        <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250">
-
-
-<!--                    text content-->
-<!--                    class="flex-grow-3"-->
+                    <!-- text fields -->
                     <div class="d-flex flex-column">
                         <h3>{{article.title}}</h3>
                         <span class="d-flex text-secondary date">
@@ -29,13 +26,11 @@
 
                         <span class="comments-read">
                             <span class="text-primary">Read whole article</span>
+                            <!-- TODO -->
+                            <!-- sum of comments -->
                             <span class="text-secondary">4 comment</span>
                         </span>
-
-
-
                     </div>
-
                 </div>
             </router-link>
 

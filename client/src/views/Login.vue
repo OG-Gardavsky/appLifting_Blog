@@ -2,7 +2,7 @@
     <div>
         <Navbar />
 
-        <form class="card">
+        <form class="card main">
             <div class="col">
 
                 <h1 class="d-flex">Log in</h1>
@@ -99,8 +99,6 @@ export default {
 <style scoped lang="scss">
 
     form {
-        max-width: 40%;
-        margin: 30px auto;
 
         .col {
             padding: 15px;

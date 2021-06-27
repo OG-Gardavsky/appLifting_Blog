@@ -2,7 +2,7 @@
     <div>
         <Navbar />
 
-        <form class="card col">
+        <form class="main card">
 
             <h1 class="d-flex">Sign up</h1>
 
@@ -106,8 +106,7 @@ name: "Signup",
 <style scoped lang="scss">
 
     form {
-        //TODO solve wrapping of form
-        //max-width: 40%;
+        padding: 15px;
         margin: 30px auto;
 
         .col {
