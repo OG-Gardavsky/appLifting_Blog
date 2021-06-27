@@ -8,6 +8,8 @@
                 <button class="btn btn-primary" @click="saveArticle()">Publish Article</button>
             </div>
 
+            <generic-error :display="genericError.display" :text="genericError.text" />
+
             <form>
                 <div class="form-group">
                     <label class="d-flex">Article Title</label>
@@ -48,10 +50,13 @@
 <script>
 import Navbar from "@/components/Navbar";
 import VueMarkdown from 'vue-markdown';
+import GenericError from "@/components/GenericError";
+import router from "@/router";
 
 export default {
     name: "CreateArticle",
         components: {
+            GenericError,
             Navbar,
             VueMarkdown
         },
@@ -63,8 +68,26 @@ export default {
         }
     },
     methods: {
-        saveArticle() {
-            console.log(this.content);
+        async saveArticle() {
+            if ([this.title, this.perex, this.content].includes(null)) {
+                return this.setGenericError(this.genericError, true, 'Please fill "Title", "Perex" and "Content"');
+            }
+
+            const body = {
+                title: this.title,
+                perex: this.perex,
+                content: this.content
+            };
+
+            const res = await this.sendRequest('articles', 'POST', true, body);
+
+            if (res.status === 201) {
+                await router.push('/administration');
+            } else {
+                //TODO
+                //enhance error handling
+                this.setGenericError(this.genericError, true, 'unable to save article');
+            }
         }
     }
 
