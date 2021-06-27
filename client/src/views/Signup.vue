@@ -26,11 +26,11 @@
             </div>
 
             <!--      login button  + link to sign up        -->
-            <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row-reverse justify-content-between">
+                <button class="btn btn-primary" @click="signup">Sign up</button>
                 <router-link to="/login">
                     <button type="submit" class="btn btn-secondary">Log in</button>
                 </router-link>
-                <button class="btn btn-primary" @click="signup">Sign up</button>
             </div>
 
 

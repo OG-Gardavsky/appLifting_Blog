@@ -21,17 +21,14 @@
                 </div>
 
                 <!--      login button  + link to sign up        -->
-                <div class="d-flex flex-row justify-content-between">
+                <div class="d-flex flex-row-reverse justify-content-between">
+                    <button type="submit" class="btn btn-primary" @click="login">Log in</button>
                     <router-link to="/signup">
                         <button class="btn btn-secondary">Sign up</button>
                     </router-link>
-                    <button type="submit" class="btn btn-primary" @click="login">Log in</button>
                 </div>
 
-                <!--       error area         -->
-                <div class="alert alert-danger" v-if="genericError.display">
-                    <div class="card-body">{{genericError.text}}</div>
-                </div>
+                <generic-error :display="genericError.display" :text="genericError.text" />
 
             </div>
         </form>
@@ -44,17 +41,15 @@
 <script>
 import Navbar from "@/components/Navbar";
 import router from "@/router";
+import GenericError from "@/components/GenericError";
 export default {
     name: "Login",
     components: {
+        GenericError,
         Navbar
     },
     data() {
         return {
-            genericError: {
-                display: false,
-                text: null
-            },
             email: null,
             password: null
         }
@@ -62,9 +57,7 @@ export default {
     methods: {
         async login() {
             if (this.email === null || this.password === null) {
-                this.genericError.display = true;
-                this.genericError.text = 'Please fill both email and password'
-                return
+                return this.setGenericError(this.genericError, true, 'Please fill both email and password');
             }
 
             const body = {

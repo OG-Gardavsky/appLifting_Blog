@@ -8,7 +8,11 @@ Vue.config.productionTip = false
 Vue.mixin({
     data() {
         return {
-            userInfo: null
+            userInfo: null,
+            genericError: {
+                display: false,
+                text: null
+            },
         }
     },
     methods: {
