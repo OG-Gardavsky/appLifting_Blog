@@ -62,10 +62,12 @@ router.get(`${baseUrl}/id::id`, async (req, res) => {
             return res.status(404).send();
         }
 
-        //TODO
-        //add check that authorId is not displayed - just name
+        const accountObject = account.toObject();
 
-        res.send(account);
+        delete accountObject.author;
+
+
+        res.send(accountObject);
     } catch (e) {
         res.status(500).send();
     }

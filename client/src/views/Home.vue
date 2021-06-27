@@ -9,12 +9,33 @@
                 :key="article._id" v-for="article in listOfArticles"
             >
 
-                <div class="d-flex flex-column article">
-                    <h2>{{article.title}}</h2>
-                    <span class="d-flex">
-                    <span class="secondary">OG author</span>
-                    <span>25.6.2021</span>
-                </span>
+                <div class="d-flex flex-row article">
+
+
+                        <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250">
+
+
+<!--                    text content-->
+<!--                    class="flex-grow-3"-->
+                    <div class="d-flex flex-column">
+                        <h3>{{article.title}}</h3>
+                        <span class="d-flex text-secondary date">
+                            <span>OG author</span>
+                            <span>•</span>
+                            <span>25.6.2021</span>
+                        </span>
+
+                        <span class="text-justify">{{article.perex}}</span>
+
+                        <span class="comments-read">
+                            <span class="text-primary">Read whole article</span>
+                            <span class="text-secondary">4 comment</span>
+                        </span>
+
+
+
+                    </div>
+
                 </div>
             </router-link>
 
@@ -73,6 +94,24 @@ export default {
         .article {
             margin: 30px 0;
             color: #2C3E50;
+
+            img {
+                margin-right: 20px;
+            }
+
+            .date  {
+                span {
+                    margin-right: 10px;
+                }
+
+
+            }
+
+            .comments-read {
+                span {
+                    margin: 20px 25px;
+                }
+            }
         }
 
     }

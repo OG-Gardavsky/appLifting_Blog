@@ -6,9 +6,13 @@
 
             <h1>{{articleDetails.title}}</h1>
 
-            <vue-markdown :source="articleDetails.content"/>
-<!--            <vue-markdown :source="articleDetails.content" />-->
-<!--            <vue-markdown />-->
+            <img class="img-fluid" src="../assets/general_cat_image.jpg">
+
+
+
+            <vue-markdown :source="articleDetails.content" />
+
+
 
         </div>
 
