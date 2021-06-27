@@ -15,6 +15,10 @@
 .main {
     max-width: 60%;
     margin: 30px auto;
+
+    .actionIcon {
+        margin: 10px;
+    }
 }
 
 .adminHeadline {

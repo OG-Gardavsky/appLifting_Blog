@@ -15,10 +15,15 @@ const articleSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        owner: {
+        author: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'
+        },
+        ts: {
+            type: Date,
+            required: true,
+            default: Date.now
         }
     },
     { timestamp: true }

@@ -25,7 +25,11 @@
                     <img src="../assets/cat.png" alt="Avatar" class="avatar">
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <span  class="dropdown-item" @click="logOut()">Log out</span>
+                    <span  class="dropdown-item" @click="logOut()">
+                        Log out
+                        <i class="fas fa-sign-out-alt actionIcon" />
+                    </span>
+
                 </div>
             </div>
             </span>

@@ -15,7 +15,7 @@ router.post(baseUrl, auth, async (req, res) => {
     try {
         const article = new Article({
             ...req.body,
-            owner: req.user._id
+            author: req.user._id
         });
 
         await article.save();
