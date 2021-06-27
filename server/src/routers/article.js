@@ -34,9 +34,23 @@ router.post(baseUrl, auth, async (req, res) => {
     }
 });
 
+/**
+ * API returns all articles
+ */
+router.get(baseUrl, async (req, res) => {
+    try{
+
+        const articles = await Article.find();
+
+        res.status(200).send(articles);
+
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
 
 /**
- * API returns article for logged user
+ * API returns articles associated with logged user
  */
 router.get(`${baseUrl}/my`, auth, async (req, res) => {
     try{
