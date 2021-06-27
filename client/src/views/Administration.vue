@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         async getListOfArticles() {
-            const res = await this.sendRequest('/articles/my', 'GET', true)
+            const res = await this.sendHttpRequest('/articles/my', 'GET', true)
 
             if (res.status === 200) {
                 this.listOfArticles = await res.json();
@@ -78,7 +78,7 @@ export default {
                 return;
             }
 
-            const res = await this.sendRequest(`/articles/id:${articleId}`, 'DELETE', true);
+            const res = await this.sendHttpRequest(`/articles/id:${articleId}`, 'DELETE', true);
 
             if (res.status === 200) {
                 await this.getListOfArticles();

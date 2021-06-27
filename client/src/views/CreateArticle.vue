@@ -79,7 +79,7 @@ export default {
                 content: this.content
             };
 
-            const res = await this.sendRequest('articles', 'POST', true, body);
+            const res = await this.sendHttpRequest('articles', 'POST', true, body);
 
             if (res.status === 201) {
                 await router.push('/administration');

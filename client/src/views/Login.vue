@@ -65,7 +65,7 @@ export default {
                 password: this.password
             };
 
-            const res = await this.sendRequest('users/login', 'POST', false, body);
+            const res = await this.sendHttpRequest('users/login', 'POST', false, body);
 
             let responseBody;
             if (res.status === 200) {

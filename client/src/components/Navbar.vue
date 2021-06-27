@@ -53,7 +53,7 @@ export default {
     },
     methods: {
          async logOut() {
-            const res = await this.sendRequest('/users/logout', 'POST', true);
+            const res = await this.sendHttpRequest('/users/logout', 'POST', true);
 
              if (res.status === 200 || res.status === 401) {
                  localStorage.removeItem('userToken');
