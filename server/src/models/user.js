@@ -44,6 +44,30 @@ const userSchema = new mongoose.Schema({
 );
 
 
+/**
+ * creates link to article
+ */
+userSchema.virtual('articles', {
+    ref: 'Article',
+    localField: '_id',
+    foreignField: 'author'
+});
+
+
+
+/**
+ * method removes password and tokens from response
+ * @returns userObject without confidential data
+ */
+userSchema.methods.toJSON = function() {
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.tokens;
+
+    return userObject;
+}
 
 
 /**

@@ -2,7 +2,7 @@
     <div>
         <Navbar />
 
-        <form class="card col">
+        <form class="main card">
 
             <h1 class="d-flex">Sign up</h1>
 
@@ -26,11 +26,11 @@
             </div>
 
             <!--      login button  + link to sign up        -->
-            <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row-reverse justify-content-between">
+                <button class="btn btn-primary" @click="signup">Sign up</button>
                 <router-link to="/login">
                     <button type="submit" class="btn btn-secondary">Log in</button>
                 </router-link>
-                <button class="btn btn-primary" @click="signup">Sign up</button>
             </div>
 
 
@@ -77,7 +77,7 @@ name: "Signup",
                 password: this.password,
             };
 
-            const res = await this.sendRequest('users', 'POST', false, body);
+            const res = await this.sendHttpRequest('users', 'POST', false, body);
 
             let responseBody;
             if (res.status === 201) {
@@ -106,8 +106,7 @@ name: "Signup",
 <style scoped lang="scss">
 
     form {
-        //TODO solve wrapping of form
-        //max-width: 40%;
+        padding: 15px;
         margin: 30px auto;
 
         .col {

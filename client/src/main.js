@@ -8,11 +8,15 @@ Vue.config.productionTip = false
 Vue.mixin({
     data() {
         return {
-            userInfo: null
+            userInfo: null,
+            genericError: {
+                display: false,
+                text: null
+            },
         }
     },
     methods: {
-        async sendRequest(url, method, requiresAuth, body = null) {
+        async sendHttpRequest(url, method, requiresAuth, body = null) {
 
 
             const headers = {'Content-type': 'application/json'};
@@ -31,7 +35,7 @@ Vue.mixin({
             incomingError.text = text;
         },
         async getUserInfo() {
-            const res = await this.sendRequest('/users', 'GET', true);
+            const res = await this.sendHttpRequest('/users', 'GET', true);
 
             if (res.status === 200) {
                 return await res.json();
