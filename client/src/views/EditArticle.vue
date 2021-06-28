@@ -1,12 +1,18 @@
 <template>
     <div>
         <Navbar />
-        <div class="main">
+        <div class="main" >
 
-            <div class="adminHeadline">
-                <h1>Edit Article</h1>
-                <button class="btn btn-primary" @click="editArticle()">Publish Article</button>
-            </div>
+            <edit-article-page v-if="articleDetails !== null"
+                :page-headline=" 'Edit article' "
+                :content-prop="articleDetails.content"
+                :perex-prop="articleDetails.perex"
+                :title-prop="articleDetails.title"
+
+                @on-save="updateArticle"
+            />
+
+            <generic-error />
 
         </div>
     </div>
@@ -14,18 +20,56 @@
 
 <script>
 import Navbar from "@/components/Navbar";
+import router from "@/router";
+import EditArticlePage from "@/components/EditArticlePage";
+import GenericError from "@/components/GenericError";
+
 export default {
-    name: "EditArticle",
-    components: {Navbar},
-    methods: {
-        editArticle() {
-
-
+    name: "CreateArticle",
+        components: {
+            GenericError,
+            EditArticlePage,
+            Navbar
+        },
+    data() {
+        return {
+            articleDetails: null,
+            articleId: null
         }
+    },
+    methods: {
+        async updateArticle(body) {
+
+            const res = await this.sendHttpRequest(`articles/id:${this.articleId}`, 'PUT', true, body);
+
+            if (res.status === 200) {
+                await router.push('/administration');
+            } else {
+                this.setGenericError(this.genericError, true, 'unable to save article');
+            }
+        },
+        async getArticleDetails() {
+
+            const res = await this.sendHttpRequest( `articles/id:${this.articleId}`, 'GET', false);
+
+            if (res.status === 200) {
+                this.articleDetails = await res.json();
+            } else {
+                this.setGenericError(this.genericError, true, 'unable to save article');
+            }
+        },
+    },
+    created() {
+        this.articleId = this.$route.query.id;
+
+        this.getArticleDetails();
     }
+
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+
 
 </style>

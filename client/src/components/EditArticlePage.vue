@@ -34,7 +34,7 @@
 
 
         <!-- markdown preview -->
-        <div style="margin-top: 30px" v-if="![title, content].includes(null)">
+        <div style="margin-top: 30px" v-if="![title, content].includes('')">
             <h2 class="d-flex">Preview</h2>
             <hr />
             <h1 class="d-flex">{{title}}</h1>
@@ -56,6 +56,15 @@ export default {
     },
     props: {
         pageHeadline: String,
+        titleProp: {
+            default: ''
+        },
+        perexProp: {
+            default: ''
+        },
+        contentProp: {
+            default: ''
+        }
     },
     data() {
         return {
@@ -80,6 +89,11 @@ export default {
             this.$emit('on-save', body);
         }
 
+    },
+    created() {
+        this.title = this.titleProp;
+        this.perex = this.perexProp;
+        this.content = this.contentProp;
     }
 }
 </script>
