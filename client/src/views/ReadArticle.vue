@@ -29,13 +29,15 @@
 
                     </div>
 
+                    <generic-error :display="genericError.display" :text="genericError.text" />
+
                     <button class="btn btn-secondary" type="button" @click="createComment()">send comment</button>
 
                 </div>
 
             </div>
 
-            <generic-error :display="genericError.display" :text="genericError.text" />
+
 
             <!-- displaying comments -->
             <div class="d-flex flex-column comment"

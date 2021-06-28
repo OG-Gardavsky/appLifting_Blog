@@ -28,7 +28,7 @@
                             <span class="text-primary">Read whole article</span>
                             <!-- TODO -->
                             <!-- sum of comments -->
-                            <span class="text-secondary">4 comment</span>
+                            <span class="text-secondary">{{article.countOfComments}} comment</span>
                         </span>
                     </div>
                 </div>
