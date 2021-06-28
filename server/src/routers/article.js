@@ -1,6 +1,7 @@
 const express = require('express');
 const Article = require('../models/article');
 const Comment = require('../models/comment');
+const User = require('../models/user');
 const auth = require('../middleware/auth');
 const router = new express.Router();
 
@@ -66,12 +67,15 @@ const getListOfArticlesFunction = async (req, res) => {
     try{
 
         let articleQuery = {};
+        let authorQuery = {}
 
         if (req.user) {
-            articleQuery = {author: req.user._id}
+            articleQuery = {author: req.user._id};
+            authorQuery = {_id: req.user._id};
         }
 
         const articles = await Article.find(articleQuery);
+        const authors = await User.find(authorQuery);
 
         const countOfComments = await Comment.aggregate([
                 {"$group" :
@@ -93,11 +97,16 @@ const getListOfArticlesFunction = async (req, res) => {
             article = article.toObject()
             delete article.content;
 
-            const match = countOfComments.find(comments => comments._id.toString() === article._id.toString())
-            if (match) {
-                article.countOfComments = match.count;
+            const commentCountMatch = countOfComments.find(comments => comments._id.toString() === article._id.toString())
+            if (commentCountMatch) {
+                article.countOfComments = commentCountMatch.count;
             } else {
                 article.countOfComments = 0;
+            }
+
+            const authorMatch = authors.find(author => author._id.toString() === article.author.toString())
+            if (authorMatch) {
+                article.authorName = authorMatch.name;
             }
 
             return article;
@@ -107,6 +116,7 @@ const getListOfArticlesFunction = async (req, res) => {
         res.status(200).send(articlesToSend);
 
     } catch (e) {
+        console.log(e)
         res.status(400).send();
     }
 }
