@@ -76,7 +76,7 @@ export default {
             articleComments: null,
             newComment: {
                 content: '',
-                author: null
+                author: ''
             }
         }
     },
@@ -90,7 +90,7 @@ export default {
         },
         async createComment() {
 
-            if ([this.newComment.content, this.newComment.author].includes(null)) {
+            if ([this.newComment.content, this.newComment.author].includes('')) {
                 return this.setGenericError(this.genericError, true, 'Please fill both your name and text of your comment');
             }
 
@@ -107,6 +107,7 @@ export default {
             if (res.status === 200) {
                 this.articleComments = await res.json();
                 this.resetNewComment();
+                this.setGenericError(this.genericError, false, '')
             }
         },
         resetNewComment() {
