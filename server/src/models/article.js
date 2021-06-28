@@ -30,6 +30,16 @@ const articleSchema = new mongoose.Schema({
 );
 
 
+/**
+ * creates link to article
+ */
+articleSchema.virtual('comments', {
+    ref: 'Comment',
+    localField: '_id',
+    foreignField: 'articleId'
+});
+
+
 
 const Article = mongoose.model('Article', articleSchema);
 module.exports = Article;
