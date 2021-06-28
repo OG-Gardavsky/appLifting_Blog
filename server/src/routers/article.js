@@ -35,14 +35,20 @@ router.post(baseUrl, auth, async (req, res) => {
 });
 
 /**
- * API returns all articles
+ * API returns all articles without content
  */
-router.get(baseUrl, async (req, res) => {
+router.get(`${baseUrl}/list`, async (req, res) => {
     try{
 
         const articles = await Article.find();
 
-        res.status(200).send(articles);
+        const articlesToSend = articles.map((article) => {
+            article = article.toObject()
+            delete article.content;
+            return article;
+        });
+
+        res.status(200).send(articlesToSend);
 
     } catch (e) {
         res.status(400).send();

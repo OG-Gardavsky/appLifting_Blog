@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         async getListOfArticlesticles() {
-            const res = await this.sendHttpRequest('/articles', 'GET', false);
+            const res = await this.sendHttpRequest('/articles/list', 'GET', false);
 
             if (res.status === 200) {
                 this.listOfArticles = await res.json();
