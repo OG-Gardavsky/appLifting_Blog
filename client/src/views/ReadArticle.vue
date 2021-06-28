@@ -17,7 +17,6 @@
 
                 <div class="form-group">
                     <label class="d-flex" v-if=" newComment.content !== '' ">Your comment</label>
-<!--                    <input type="text" class="form-control" v-model="newComment.content" placeholder="Join the discussion" >-->
                     <textarea class="form-control" v-model="newComment.content" placeholder="Join the discussion"
                               :rows="newComment.content === '' ? 1 : 4"/>
                 </div>
@@ -50,9 +49,17 @@
                 <span>{{comment.content}}</span>
 
                 <span class="voting">
-                    <span>+3</span>
-                    <i class="fas fa-chevron-up btn" />
-                    <i class="fas fa-chevron-down btn" />
+                    <span>
+
+                        <span v-if="comment.sumOfVotes !== null">
+                            <span v-if="comment.sumOfVotes > 1">+</span>
+                           {{comment.sumOfVotes}}
+                        </span>
+
+                        <span v-if="comment.sumOfVotes === undefined">0</span>
+                    </span>
+                    <i class="fas fa-chevron-up btn" @click="giveVoteToComment(comment._id, 1)"/>
+                    <i class="fas fa-chevron-down btn" @click="giveVoteToComment(comment._id, -1)" />
                 </span>
             </div>
 
@@ -114,6 +121,20 @@ export default {
                 this.setGenericError(this.genericError, false, '')
             }
         },
+        async giveVoteToComment (commentId, value) {
+
+            const body = {
+                commentId,
+                value
+            };
+
+            const res = await this.sendHttpRequest('/commentVotes', 'POST', true, body);
+
+            if (res.status === 201) {
+                await this.getArticleComments(this.articleId);
+            }
+
+        },
         resetNewComment() {
             this.newComment.content = '';
         }
@@ -134,7 +155,7 @@ export default {
     .comment {
         margin: 15px 0;
 
-        span {
+        >span {
             padding: 5px;
         }
     }
