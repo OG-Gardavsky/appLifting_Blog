@@ -20,7 +20,7 @@ router.post(baseUrl, async (req, res) => {
             return res.status(404).send({error: 'commentId does not belong to existing comment.'});
         }
 
-        const isDuplicate = await CommentVote.findOne({commentId, ip: req.ip})
+        const isDuplicate = await CommentVote.findOne({commentId, ip: req.ip, value: req.body.value});
 
         if (isDuplicate) {
             return res.status(400).send({error: 'already voted for this comment'});
@@ -81,21 +81,6 @@ router.get(`${baseUrl}/sum/commentId::id`, async (req, res) => {
         res.status(500).send();
     }
 });
-
-//code can be used for grouping of comments in batch request
-// { "$project": {
-//         "commentId": ,
-//         "value": 1
-//     }},
-
-// { $match: { commentId }},
-// {"$group" :
-//         {
-//             _id: '$commentId',
-//             sum: { $sum: '$value' }
-//         }
-// }
-
 
 
 

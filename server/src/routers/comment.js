@@ -1,6 +1,7 @@
 const express = require('express');
 const Comment = require('../models/comment');
 const Article = require('../models/article');
+const CommentVote = require('../models/commentVote');
 const auth = require('../middleware/auth');
 const router = new express.Router();
 
@@ -37,7 +38,7 @@ router.post(baseUrl, async (req, res) => {
 
 
 /**
- * API returns comment asociated with article
+ * API returns comment asociated with article + sum of their votes(if some votes are present)
  */
 router.get(`${baseUrl}/articleId::id`, async (req, res) => {
 
@@ -51,9 +52,39 @@ router.get(`${baseUrl}/articleId::id`, async (req, res) => {
         }
 
         const comments = await Comment.find({articleId});
-        res.status(200).send(comments);
+        const commentIds = comments.map(comment => comment._id);
+
+        const summedVotes = await CommentVote.aggregate([
+                { $match: {  commentId: { $in: commentIds }  } },
+                {"$group" :
+                        {
+                            _id: '$commentId',
+                            sum: { $sum: '$value' }
+                        }
+                }
+            ],
+            (e) => {
+                if (e) {
+                    throw new Error('error in DB agregation');
+                }
+            }
+        );
+
+        const commentsWithStats = comments.map((comment) => {
+            const match = summedVotes.find(votedSUm => votedSUm._id.toString() === comment._id.toString());
+            if (match) {
+                comment = comment.toObject();
+                comment.sumOfVotes = match.sum;
+            }
+            return comment;
+        });
+
+
+
+        res.status(200).send(commentsWithStats);
 
     } catch (e) {
+        console.log(e)
         res.status(500).send();
     }
 });
