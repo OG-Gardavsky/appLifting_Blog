@@ -26,7 +26,7 @@
                         <!--solve max length title + perex-->
                         <td>{{article.title}}</td>
                         <td>{{article.perex}}</td>
-                        <td>42</td>
+                        <td>{{article.countOfComments}}</td>
                         <td>
                             <div class="d-flex">
                                 <span  @click="goEditArticle(article._id)">

@@ -34,6 +34,34 @@ router.post(baseUrl, auth, async (req, res) => {
     }
 });
 
+
+
+/**
+ * API returns details about one article
+ */
+router.get(`${baseUrl}/id::id`, async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+        const article = await Article.findOne({_id});
+
+        if (!article) {
+            return res.status(404).send();
+        }
+
+        const articleObject = article.toObject();
+
+        delete articleObject.author;
+
+
+        res.send(articleObject);
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+
+
+
 /**
  * API returns all articles without content
  */
@@ -65,6 +93,8 @@ router.get(`${baseUrl}/list`, async (req, res) => {
             const match = countOfComments.find(comments => comments._id.toString() === article._id.toString())
             if (match) {
                 article.countOfComments = match.count;
+            } else {
+                article.countOfComments = 0;
             }
 
             return article;
@@ -78,46 +108,54 @@ router.get(`${baseUrl}/list`, async (req, res) => {
     }
 });
 
-/**
- * API returns details about one article
- */
-router.get(`${baseUrl}/id::id`, async (req, res) => {
-    const _id = req.params.id;
-
-    try {
-        const article = await Article.findOne({_id});
-
-        if (!article) {
-            return res.status(404).send();
-        }
-
-        const articleObject = article.toObject();
-
-        delete articleObject.author;
-
-
-        res.send(articleObject);
-    } catch (e) {
-        res.status(500).send();
-    }
-});
 
 /**
  * API returns articles associated with logged user
  */
 router.get(`${baseUrl}/my`, auth, async (req, res) => {
+
     try{
 
+        const articles = await Article.find({author: req.user._id});
 
-        await req.user.populate({
-            path: 'articles'
-        }).execPopulate();
+        const countOfComments = await Comment.aggregate([
+                {"$group" :
+                        {
+                            _id: '$articleId',
+                            count: { $sum: 1 }
+                        }
+                }
+            ],
+            (e) => {
+                if (e) {
+                    throw new Error('error in DB agregation');
+                }
+            }
+        );
 
-        res.status(200).send(req.user.articles);
+        const articlesToSend = articles.map((article) => {
+
+            article = article.toObject()
+            delete article.content;
+
+            const match = countOfComments.find(comments => comments._id.toString() === article._id.toString())
+            if (match) {
+                article.countOfComments = match.count;
+            } else {
+                article.countOfComments = 0;
+            }
+
+            return article;
+        });
+
+
+        res.status(200).send(articlesToSend);
 
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send();
     }
+
+
 });
 
 
