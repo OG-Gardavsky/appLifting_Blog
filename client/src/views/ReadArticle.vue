@@ -11,14 +11,15 @@
             <hr/>
 
             <!-- comment section -->
-            <h2>Comments (4)</h2>
-
+            <h2>Comments ({{articleComments.length}})</h2>
             <!-- adding comment -->
             <div>
 
                 <div class="form-group">
                     <label class="d-flex" v-if=" newComment.content !== '' ">Your comment</label>
-                    <input type="text" class="form-control" v-model="newComment.content" placeholder="Join the discussion" >
+<!--                    <input type="text" class="form-control" v-model="newComment.content" placeholder="Join the discussion" >-->
+                    <textarea class="form-control" v-model="newComment.content" placeholder="Join the discussion"
+                              :rows="newComment.content === '' ? 1 : 4"/>
                 </div>
 
                 <div v-if=" newComment.content !== '' ">
@@ -26,6 +27,7 @@
                     <div class="form-group">
                         <label class="d-flex">Your name</label>
                         <input type="text" class="form-control" v-model="newComment.author" placeholder="Your name" >
+
                     </div>
 
                     <button class="btn btn-secondary" type="button" @click="createComment()">send comment</button>
@@ -37,10 +39,16 @@
             <generic-error :display="genericError.display" :text="genericError.text" />
 
             <!-- displaying comments -->
-            <div
-                :key="comment._id" v-for="comment in articleComments"
-            >
-                <p> {{comment.content}}  {{comment.author}} </p>
+            <div class="d-flex flex-column comment"
+                :key="comment._id" v-for="comment in articleComments">
+
+                <div class="d-flex flex-row">
+                    <span class="font-weight-bold">{{comment.author}}</span>
+                    <span>{{comment.ts}}</span>
+                </div>
+
+                <span>{{comment.content}}</span>
+
 
             </div>
 
@@ -98,7 +106,11 @@ export default {
 
             if (res.status === 200) {
                 this.articleComments = await res.json();
+                this.resetNewComment();
             }
+        },
+        resetNewComment() {
+            this.newComment.content = '';
         }
     },
     created() {
@@ -113,6 +125,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+    .comment {
+        margin: 15px 0;
+
+        span {
+            padding: 5px;
+        }
+    }
 
     input {
         margin: 10px 0;
