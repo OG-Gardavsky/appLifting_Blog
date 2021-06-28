@@ -1,6 +1,16 @@
 <template>
     <div>
         <form>
+
+            <div class="adminHeadline">
+                <h1>{{pageHeadline}}</h1>
+                <button class="btn btn-primary" @click="createArticle()">Publish Article</button>
+            </div>
+
+            <generic-error :display="genericError.display" :text="genericError.text" />
+
+
+
             <div class="form-group">
                 <label class="d-flex">Article Title</label>
                 <input type="text" class="form-control" v-model="title" placeholder="My first article" />
@@ -36,35 +46,41 @@
 
 <script>
 import VueMarkdown from 'vue-markdown';
+import GenericError from "@/components/GenericError";
 
 export default {
     name: "EditArticlePage",
     components: {
-        VueMarkdown
+        VueMarkdown,
+        GenericError
     },
     props: {
-        title: String,
-        perex: String,
-        content: String
+        pageHeadline: String,
+    },
+    data() {
+        return {
+            title: '',
+            perex: '',
+            content: ''
+        }
+    },
+    methods: {
+
+        async createArticle() {
+            if ([this.title, this.perex, this.content].includes('')) {
+                return this.setGenericError(this.genericError, true, 'Please fill "Title", "Perex" and "Content"');
+            }
+
+            const body = {
+                title: this.title,
+                perex: this.perex,
+                content: this.content
+            };
+
+            this.$emit('on-save', body);
+        }
+
     }
-    // ,
-    // methods: {
-    //     createArticle() {
-    //         if ([this.title, this.perex, this.content].includes(null)) {
-    //             return this.setGenericError(this.genericError, true, 'Please fill "Title", "Perex" and "Content"');
-    //         }
-    //
-    //
-    //         const body = {
-    //             title: this.title,
-    //             perex: this.perex,
-    //             content: this.content
-    //         };
-    //
-    //         this.$emit('on-login', body);
-    //
-    //     }
-    // }
 }
 </script>
 
