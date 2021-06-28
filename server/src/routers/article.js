@@ -45,7 +45,7 @@ router.get(baseUrl, async (req, res) => {
         res.status(200).send(articles);
 
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send();
     }
 });
 
