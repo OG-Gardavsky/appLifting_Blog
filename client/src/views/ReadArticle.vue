@@ -6,6 +6,7 @@
 
             <!-- main article -->
             <h1>{{articleDetails.title}}</h1>
+            <author-date :name="articleDetails.authorName" :date="articleDetails.ts" />
             <img class="img-fluid" src="../assets/general_cat_image.jpg">
             <vue-markdown :source="articleDetails.content" />
             <hr/>
@@ -75,9 +76,11 @@
 import Navbar from "@/components/Navbar";
 import VueMarkdown from 'vue-markdown';
 import GenericError from "@/components/GenericError";
+import AuthorDate from "@/components/AuthorDate";
 export default {
     name: "ReadArticle",
     components: {
+        AuthorDate,
         GenericError,
         Navbar,
         VueMarkdown

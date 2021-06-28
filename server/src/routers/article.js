@@ -50,9 +50,15 @@ router.get(`${baseUrl}/id::id`, async (req, res) => {
             return res.status(404).send();
         }
 
+        const author = await User.findOne({_id: article.author.toString()})
         const articleObject = article.toObject();
-
+        //security paranoia - not telling user Ids without auth
         delete articleObject.author;
+
+        console.log(author)
+        if (author) {
+            articleObject.authorName = author.name;
+        }
 
 
         res.send(articleObject);
@@ -108,6 +114,9 @@ const getListOfArticlesFunction = async (req, res) => {
             if (authorMatch) {
                 article.authorName = authorMatch.name;
             }
+
+            //security paranoia - not telling user Ids without auth
+            delete article.author;
 
             return article;
         });

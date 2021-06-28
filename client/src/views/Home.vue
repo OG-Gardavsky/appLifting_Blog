@@ -16,11 +16,8 @@
                     <!-- text fields -->
                     <div class="d-flex flex-column">
                         <h3>{{article.title}}</h3>
-                        <span class="d-flex text-secondary date">
-                            <span>OG author</span>
-                            <span>•</span>
-                            <span>25.6.2021</span>
-                        </span>
+
+                        <author-date :date="article.ts" :name="article.authorName"/>
 
                         <span class="text-justify">{{article.perex}}</span>
 
@@ -47,9 +44,11 @@
 import Navbar from "@/components/Navbar";
 import GenericError from "@/components/GenericError";
 import router from "@/router";
+import AuthorDate from "@/components/AuthorDate";
 export default {
     name: 'Home',
     components: {
+        AuthorDate,
         GenericError,
         Navbar
     },
@@ -92,13 +91,6 @@ export default {
                 margin-right: 20px;
             }
 
-            .date  {
-                span {
-                    margin-right: 10px;
-                }
-
-
-            }
 
             .comments-read {
                 span {
