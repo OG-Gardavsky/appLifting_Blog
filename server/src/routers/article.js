@@ -62,13 +62,16 @@ router.get(`${baseUrl}/id::id`, async (req, res) => {
 
 
 
-/**
- * API returns all articles without content
- */
-router.get(`${baseUrl}/list`, async (req, res) => {
+const getListOfArticlesFunction = async (req, res) => {
     try{
 
-        const articles = await Article.find();
+        let articleQuery = {};
+
+        if (req.user) {
+            articleQuery = {author: req.user._id}
+        }
+
+        const articles = await Article.find(articleQuery);
 
         const countOfComments = await Comment.aggregate([
                 {"$group" :
@@ -106,57 +109,18 @@ router.get(`${baseUrl}/list`, async (req, res) => {
     } catch (e) {
         res.status(400).send();
     }
-});
+}
+
+/**
+ * API returns all articles without content
+ */
+router.get(`${baseUrl}/list`, getListOfArticlesFunction);
 
 
 /**
  * API returns articles associated with logged user
  */
-router.get(`${baseUrl}/my`, auth, async (req, res) => {
-
-    try{
-
-        const articles = await Article.find({author: req.user._id});
-
-        const countOfComments = await Comment.aggregate([
-                {"$group" :
-                        {
-                            _id: '$articleId',
-                            count: { $sum: 1 }
-                        }
-                }
-            ],
-            (e) => {
-                if (e) {
-                    throw new Error('error in DB agregation');
-                }
-            }
-        );
-
-        const articlesToSend = articles.map((article) => {
-
-            article = article.toObject()
-            delete article.content;
-
-            const match = countOfComments.find(comments => comments._id.toString() === article._id.toString())
-            if (match) {
-                article.countOfComments = match.count;
-            } else {
-                article.countOfComments = 0;
-            }
-
-            return article;
-        });
-
-
-        res.status(200).send(articlesToSend);
-
-    } catch (e) {
-        res.status(400).send();
-    }
-
-
-});
+router.get(`${baseUrl}/my`, auth, getListOfArticlesFunction);
 
 
 /**
