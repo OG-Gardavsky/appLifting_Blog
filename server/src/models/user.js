@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
 
 
 /**
- * creates link to account
+ * creates link to article
  */
 userSchema.virtual('articles', {
     ref: 'Article',
