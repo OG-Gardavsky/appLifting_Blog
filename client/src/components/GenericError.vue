@@ -15,5 +15,7 @@ export default {
 </script>
 
 <style scoped>
-
+    .alert {
+        margin: 10px 0;
+    }
 </style>

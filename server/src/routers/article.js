@@ -1,5 +1,6 @@
 const express = require('express');
 const Article = require('../models/article');
+const Comment = require('../models/comment');
 const auth = require('../middleware/auth');
 const router = new express.Router();
 
@@ -35,17 +36,47 @@ router.post(baseUrl, auth, async (req, res) => {
 });
 
 /**
- * API returns all articles
+ * API returns all articles without content
  */
-router.get(baseUrl, async (req, res) => {
+router.get(`${baseUrl}/list`, async (req, res) => {
     try{
 
         const articles = await Article.find();
 
-        res.status(200).send(articles);
+        const countOfComments = await Comment.aggregate([
+                {"$group" :
+                        {
+                            _id: '$articleId',
+                            count: { $sum: 1 }
+                        }
+                }
+            ],
+            (e) => {
+                if (e) {
+                    console.log(e)
+                    throw new Error('error in DB agregation');
+                }
+            }
+        );
+
+        const articlesToSend = articles.map((article) => {
+
+            article = article.toObject()
+            delete article.content;
+
+            const match = countOfComments.find(comments => comments._id.toString() === article._id.toString())
+            if (match) {
+                article.countOfComments = match.count;
+            }
+
+            return article;
+        });
+
+
+        res.status(200).send(articlesToSend);
 
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send();
     }
 });
 

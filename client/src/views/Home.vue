@@ -28,7 +28,7 @@
                             <span class="text-primary">Read whole article</span>
                             <!-- TODO -->
                             <!-- sum of comments -->
-                            <span class="text-secondary">4 comment</span>
+                            <span class="text-secondary">{{article.countOfComments}} comment</span>
                         </span>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         async getListOfArticlesticles() {
-            const res = await this.sendHttpRequest('/articles', 'GET', false);
+            const res = await this.sendHttpRequest('/articles/list', 'GET', false);
 
             if (res.status === 200) {
                 this.listOfArticles = await res.json();
