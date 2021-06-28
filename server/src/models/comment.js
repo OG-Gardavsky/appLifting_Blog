@@ -21,9 +21,17 @@ const commentSchema = new mongoose.Schema({
             required: true,
             default: Date.now
         }
-    },
-    { timestamp: true }
+    }
 );
+
+/**
+ * creates link to article
+ */
+commentSchema.virtual('commentVotes', {
+    ref: 'CommentVote',
+    localField: '_id',
+    foreignField: 'commentId'
+});
 
 
 

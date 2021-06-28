@@ -49,7 +49,11 @@
 
                 <span>{{comment.content}}</span>
 
-
+                <span class="voting">
+                    <span>+3</span>
+                    <i class="fas fa-chevron-up btn" />
+                    <i class="fas fa-chevron-down btn" />
+                </span>
             </div>
 
 
