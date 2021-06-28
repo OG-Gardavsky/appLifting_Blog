@@ -55,11 +55,9 @@ router.get(`${baseUrl}/id::id`, async (req, res) => {
         //security paranoia - not telling user Ids without auth
         delete articleObject.author;
 
-        console.log(author)
         if (author) {
             articleObject.authorName = author.name;
         }
-
 
         res.send(articleObject);
     } catch (e) {
@@ -125,7 +123,6 @@ const getListOfArticlesFunction = async (req, res) => {
         res.status(200).send(articlesToSend);
 
     } catch (e) {
-        console.log(e)
         res.status(400).send();
     }
 }
