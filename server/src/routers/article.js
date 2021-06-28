@@ -28,7 +28,6 @@ router.post(baseUrl, auth, async (req, res) => {
             res.status(400).send(e);
 
         } else {
-            console.log(e)
             res.status(500).send();
         }
 
@@ -53,7 +52,6 @@ router.get(`${baseUrl}/list`, async (req, res) => {
             ],
             (e) => {
                 if (e) {
-                    console.log(e)
                     throw new Error('error in DB agregation');
                 }
             }
@@ -87,18 +85,18 @@ router.get(`${baseUrl}/id::id`, async (req, res) => {
     const _id = req.params.id;
 
     try {
-        const account = await Article.findOne({_id});
+        const article = await Article.findOne({_id});
 
-        if (!account) {
+        if (!article) {
             return res.status(404).send();
         }
 
-        const accountObject = account.toObject();
+        const articleObject = article.toObject();
 
-        delete accountObject.author;
+        delete articleObject.author;
 
 
-        res.send(accountObject);
+        res.send(articleObject);
     } catch (e) {
         res.status(500).send();
     }
@@ -119,6 +117,36 @@ router.get(`${baseUrl}/my`, auth, async (req, res) => {
 
     } catch (e) {
         res.status(400).send(e);
+    }
+});
+
+
+/**
+ * API updates article
+ */
+router.put(`${baseUrl}/id::id`, auth, async (req, res) => {
+
+    const _id = req.params.id;
+
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['title', 'perex', 'content'];
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid body of request, in request should be only fields ' + allowedUpdates.toString() });
+    }
+
+    try {
+        const article = await Article.findOne({ _id, author:req.user._id });
+        if (!article) {
+            return res.status(404).send();
+        }
+
+        updates.forEach((update) => article[update] = req.body[update]);
+        await article.save();
+        res.send(article);
+    } catch (e) {
+        res.status(500).send();
     }
 });
 
