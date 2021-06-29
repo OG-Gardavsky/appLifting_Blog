@@ -19,7 +19,7 @@
 
                         <author-date :date="parseDate(article.ts)" :name="article.authorName"/>
 
-                        <span class="text-justify">{{article.perex}}</span>
+                        <span class="text-justify">{{shortenPerex(article.perex, 300)}}</span>
 
                         <span class="comments-read">
                             <span class="text-primary">Read whole article</span>

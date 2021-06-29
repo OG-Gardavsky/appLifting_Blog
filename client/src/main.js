@@ -17,6 +17,10 @@ Vue.mixin({
         }
     },
     methods: {
+        shortenPerex (perex, maxLength) {
+
+            return perex.length > maxLength ? perex.substring(0, maxLength) + '...' : perex;
+        },
         async sendHttpRequest(url, method, requiresAuth, body = null) {
 
 

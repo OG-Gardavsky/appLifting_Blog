@@ -25,7 +25,7 @@
                     <tr :key="article._id" v-for="article in listOfArticles">
                         <!--solve max length title + perex-->
                         <td>{{article.title}}</td>
-                        <td>{{article.perex}}</td>
+                        <td>{{shortenPerex(article.perex, 40)}}</td>
                         <td>{{article.countOfComments}}</td>
                         <td>
                             <div class="d-flex">
