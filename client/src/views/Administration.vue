@@ -29,12 +29,15 @@
                         <td>{{article.countOfComments}}</td>
                         <td>
                             <div class="d-flex">
-                                <span  @click="goEditArticle(article._id)">
+                                <span  class="btn" @click="goEditArticle(article._id)">
                                     <i class="far fa-edit actionIcon"/>
                                 </span>
-                                <span @click="deleteArticle(article._id, article.title)">
+
+                                <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"
+                                    @click="articleToDelete = article"
+                                >
                                     <i class="fas fa-trash actionIcon" />
-                                </span>
+                                </button>
 
                             </div>
                         </td>
@@ -42,6 +45,30 @@
 
                 </tbody>
             </table>
+
+
+            <!-- modal -->
+            <div class="modal fade" id="exampleModal" role="dialog" v-if="articleToDelete !== null">
+
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete article '{{articleToDelete.title}}'?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="deleteArticle(articleToDelete._id)">delete</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
 
         </div>
@@ -57,6 +84,7 @@ export default {
     components: {Navbar},
     data() {
         return {
+            articleToDelete: null,
             listOfArticles: null
         }
     },
@@ -71,18 +99,15 @@ export default {
         goEditArticle(articleId) {
             router.push(`/editArticle?id=${articleId}`);
         },
-        async deleteArticle(articleId, articleTitle) {
-            const deleteConfirm = window.confirm(`wanna delete article '${articleTitle}'`)
-
-            if (!deleteConfirm) {
-                return;
-            }
+        async deleteArticle(articleId) {
 
             const res = await this.sendHttpRequest(`/articles/id:${articleId}`, 'DELETE', true);
 
             if (res.status === 200) {
                 await this.getListOfArticles();
             }
+
+            // this.articleToDelete = null;
 
 
         }
