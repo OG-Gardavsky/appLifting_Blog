@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "748c40bb-5e94-4f8c-b273-06c65d8776d7",
+		"name": "Comment votes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new Comment",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"commentId\": \"60d96e68ee64222f64df74ae\",\r\n    \"value\": -1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/commentVotes",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"commentVotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get comments sum",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/commentVotes/sum/commentId:60d96e68ee64222f64df74ae",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"commentVotes",
+						"sum",
+						"commentId:60d96e68ee64222f64df74ae"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

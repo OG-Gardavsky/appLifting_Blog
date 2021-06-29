@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "2ec44799-663a-42f7-a243-8410c4860eac",
+		"name": "Article",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new Article",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"second API\",\r\n    \"perex\": \"\",\r\n    \"content\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/articles",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Article",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"second API\",\r\n    \"perex\": \"neco jiny\",\r\n    \"content\": \"something \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}/articles/id:60da18438869e844a82b8b8b",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"articles",
+						"id:60da18438869e844a82b8b8b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of users articles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/articles/my",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"articles",
+						"my"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of Articles",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/articles/list",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"articles",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Article details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/articles/id:60da399c44e74244dc52c4db",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"articles",
+						"id:60da399c44e74244dc52c4db"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
