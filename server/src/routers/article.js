@@ -119,8 +119,10 @@ const getListOfArticlesFunction = async (req, res) => {
             return article;
         });
 
+        const sortedArticles = articlesToSend.sort((a, b) => b.ts - a.ts)
 
-        res.status(200).send(articlesToSend);
+
+        res.status(200).send(sortedArticles);
 
     } catch (e) {
         res.status(400).send();
