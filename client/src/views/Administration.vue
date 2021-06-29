@@ -107,8 +107,6 @@ export default {
                 await this.getListOfArticles();
             }
 
-            // this.articleToDelete = null;
-
 
         }
     },
