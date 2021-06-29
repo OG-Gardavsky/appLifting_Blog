@@ -7,15 +7,17 @@
                 <div>
                     <img alt="Cat logo" src="../assets/cat.png" width="70px">
                 </div>
-                <router-link to="/" class="routeLink">Recent Articles</router-link>
-                <router-link to="/about" class="routeLink">About</router-link>
+                <router-link to="/" class="routeLink text-muted">Recent Articles</router-link>
+                <router-link to="/about" class="routeLink text-muted">About</router-link>
             </div>
 
+            <div class="d-flex flex-row">
+                <router-link class="routeLink" to="/login" v-if="authenticated === false">
+                    Log in
+                    <i class="fas fa-arrow-right" />
+                </router-link>
+            </div>
 
-            <router-link to="/login" v-if="authenticated === false">
-                <span class="routeLink">Log in</span>
-                <i class="fas fa-arrow-right" />
-            </router-link>
 
 
             <div class="d-flex flex-row" v-if="authenticated === true">
@@ -75,7 +77,7 @@ export default {
         padding-top: 10px;
 
         .nav {
-            max-width: 70%;
+            max-width: 60%;
             margin: 0 auto;
             justify-content: space-between;
 
