@@ -2,12 +2,12 @@
     <div>
         <Navbar :authenticated="authenticatedGlobal"/>
 
-        <div class="main">
+        <div class="main" v-if="articleDetails !== null && articleComments !== null">
 
             <!-- main article -->
             <h1>{{articleDetails.title}}</h1>
             <author-date :name="articleDetails.authorName" :date="articleDetails.ts" />
-            <img class="img-fluid" src="../assets/general_cat_image.jpg">
+            <img class="img-fluid" src="../assets/general_cat_image.jpg" alt="general cat">
             <vue-markdown :source="articleDetails.content" />
             <hr/>
 
@@ -17,16 +17,16 @@
             <div>
 
                 <div class="form-group">
-                    <label class="d-flex" v-if=" newComment.content !== '' ">Your comment</label>
-                    <textarea class="form-control" v-model="newComment.content" placeholder="Join the discussion"
+                    <label class="d-flex" for="newCommentContent" v-if=" newComment.content !== '' ">Your comment</label>
+                    <textarea id="newCommentContent" class="form-control" v-model="newComment.content" placeholder="Join the discussion"
                               :rows="newComment.content === '' ? 1 : 4"/>
                 </div>
 
                 <div v-if=" newComment.content !== '' ">
 
                     <div class="form-group">
-                        <label class="d-flex">Your name</label>
-                        <input type="text" class="form-control" v-model="newComment.author" placeholder="Your name" >
+                        <label for="newCommentAuthor" class="d-flex">Your name</label>
+                        <input id="newCommentAuthor" type="text" class="form-control" v-model="newComment.author" placeholder="Your name" >
 
                     </div>
 
