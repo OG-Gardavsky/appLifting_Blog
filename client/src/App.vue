@@ -13,8 +13,14 @@
 }
 
 .main {
-    max-width: 60%;
     margin: 30px auto;
+
+    @media (min-width: 768px) {
+        max-width: 60%;
+    }
+
+
+
 
     .actionIcon {
         margin: 10px;

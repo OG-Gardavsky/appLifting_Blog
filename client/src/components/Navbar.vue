@@ -2,7 +2,7 @@
     <div>
         <div class="nav">
 
-            <!--  -->
+
             <span id="defaultLinks" class="d-flex flex-row">
                 <img alt="Cat logo" src="../assets/cat.png" width="60px">
                 <router-link to="/" class="routeLink">Recent Articles</router-link>
@@ -16,14 +16,14 @@
             </router-link>
 
 
-            <span id="loggedUserLinks" class="d-flex flex-row" v-if="authenticated === true">
+            <div id="loggedUserLinks" class="d-flex flex-row" v-if="authenticated === true">
                 <router-link to="/administration" class="routeLink text-muted">My Articles</router-link>
                 <router-link to="/createArticle" class="routeLink">Create Article</router-link>
 
                 <!-- dropdown for log out -->
                 <div class="dropdown">
 
-                    <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                         <img src="../assets/cat.png" alt="Avatar" class="avatar">
                     </button>
 
@@ -36,7 +36,7 @@
 
                 </div>
 
-            </span>
+            </div>
 
 
 
@@ -78,7 +78,7 @@ export default {
             justify-content: space-between;
 
             .routeLink {
-                margin: 10px;
+                margin: 25px 10px;
             }
 
             #defaultLinks {
@@ -93,9 +93,8 @@ export default {
 
 
             .avatar {
-                vertical-align: middle;
-                width: 50px;
-                height: 50px;
+                width: 35px;
+                height: 35px;
                 border-radius: 50%;
             }
 
