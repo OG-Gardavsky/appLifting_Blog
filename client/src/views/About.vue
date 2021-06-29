@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
 
         <div class="main">
             <h1>About Page</h1>
@@ -20,7 +20,11 @@
 import Navbar from "@/components/Navbar";
 export default {
     name: "About",
-    components: {Navbar}
+    components: {Navbar},
+    async created() {
+        await this.checkCredentials('/');
+
+    }
 }
 </script>
 

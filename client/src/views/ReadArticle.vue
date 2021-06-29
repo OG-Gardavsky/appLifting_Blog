@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
 
         <div class="main">
 
@@ -145,6 +145,8 @@ export default {
         }
     },
     created() {
+        this.checkCredentials();
+
         this.articleId = this.$route.query.id
 
         this.getArticleDetails(this.articleId);

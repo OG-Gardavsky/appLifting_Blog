@@ -10,28 +10,32 @@
             </span>
 
 
-            <router-link to="/login" v-if="!authenticated">
+            <router-link to="/login" v-if="authenticated === false">
                 <span class="routeLink">Log in</span>
                 <i class="fas fa-arrow-right" />
             </router-link>
 
 
-            <span id="loggedUserLinks" class="d-flex flex-row" v-if="authenticated">
+            <span id="loggedUserLinks" class="d-flex flex-row" v-if="authenticated === true">
                 <router-link to="/administration" class="routeLink text-muted">My Articles</router-link>
                 <router-link to="/createArticle" class="routeLink">Create Article</router-link>
+
                 <!-- dropdown for log out -->
                 <div class="dropdown">
-                <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../assets/cat.png" alt="Avatar" class="avatar">
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <span  class="dropdown-item" @click="logOut()">
-                        Log out
-                        <i class="fas fa-sign-out-alt actionIcon" />
-                    </span>
+
+                    <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../assets/cat.png" alt="Avatar" class="avatar">
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <span  class="dropdown-item" @click="logOut()">
+                            Log out
+                            <i class="fas fa-sign-out-alt actionIcon" />
+                        </span>
+                    </div>
 
                 </div>
-            </div>
+
             </span>
 
 
@@ -42,27 +46,23 @@
 </template>
 
 <script>
+
 import router from "@/router";
 
 export default {
-     name: "Navbar",
-    data() {
-         return {
-             authenticated: false
-         }
+    name: "Navbar",
+    props: {
+        authenticated: Boolean
     },
     methods: {
-         async logOut() {
+        async logOut() {
             const res = await this.sendHttpRequest('/users/logout', 'POST', true);
 
-             if (res.status === 200 || res.status === 401) {
-                 localStorage.removeItem('userToken');
-                 await router.push('/');
-             }
-         }
-    },
-    async created() {
-        this.authenticated = await this.checkCredentials();
+            if (res.status === 200 || res.status === 401) {
+                localStorage.removeItem('userToken');
+                await router.push('/login')
+            }
+        }
     }
 }
 </script>

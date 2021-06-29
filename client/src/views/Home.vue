@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
         <div class="main">
             <h1>Recent articles</h1>
             <generic-error :display="genericError.display" :text="genericError.text" />
@@ -69,8 +69,10 @@ export default {
             router.push(`readArticle?id=${articleId}`);
         }
     },
-    created() {
-        this.getListOfArticlesticles();
+
+    async created() {
+        await this.checkCredentials();
+        await this.getListOfArticlesticles();
     }
 }
 

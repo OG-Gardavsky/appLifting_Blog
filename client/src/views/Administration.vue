@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
         <div class="main">
             <div class="adminHeadline">
                 <h1>My articles</h1>
@@ -87,10 +87,13 @@ export default {
 
         }
     },
-    created() {
-        this.checkCredentials('/');
+    async created() {
+        await this.checkCredentials('/');
 
-        this.getListOfArticles();
+        if (this.authenticatedGlobal) {
+            await this.getListOfArticles();
+        }
+
     }
 }
 </script>

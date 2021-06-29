@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
         <div class="main" >
 
             <edit-article-page v-if="articleDetails !== null"
@@ -59,10 +59,15 @@ export default {
             }
         },
     },
-    created() {
-        this.articleId = this.$route.query.id;
+    async created() {
+        await this.checkCredentials('/');
 
-        this.getArticleDetails();
+        if (this.authenticatedGlobal) {
+            this.articleId = this.$route.query.id;
+
+            await this.getArticleDetails();
+        }
+
     }
 
 }

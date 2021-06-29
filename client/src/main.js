@@ -13,6 +13,7 @@ Vue.mixin({
                 display: false,
                 text: null
             },
+            authenticatedGlobal: false
         }
     },
     methods: {
@@ -38,46 +39,39 @@ Vue.mixin({
             const res = await this.sendHttpRequest('/users', 'GET', true);
 
             if (res.status === 200) {
-                return await res.json();
+                return res;
             } else {
                 throw new Error();
             }
         },
         /**
          * checks if user is authanticated
-         * @param locationTopush - optional - pushes to selected location of web, when authentication is not successfull
-         * @returns {Promise<Route|boolean>} true when user is authenticated, otherwise false
+         * @param locationTopush locationTopush - optional - pushes to selected location of web, when authentication is not successfull
+         * @returns {Promise<void>}
          */
-        async checkCredentials(locationTopush = null) {
-            let areCredentialsOk;
+        async checkCredentials(locationTopush= null) {
 
             if (localStorage.getItem('userToken') === null) {
-                areCredentialsOk = false;
+                this.authenticatedGlobal = false;
             }
 
-            if (areCredentialsOk !== false) {
-                try {
-                    const getUserInfo = await this.getUserInfo();
+            try {
+                const getUserInfo = await this.getUserInfo();
 
-                    if (getUserInfo.error) {
-                        localStorage.removeItem('userToken');
-                        areCredentialsOk = false;
-                    } else {
-                        areCredentialsOk = true;
-                        this.userInfo = getUserInfo;
-                    }
-
-                } catch (e) {
-                    areCredentialsOk = false;
+                if (getUserInfo.status === 200) {
+                    this.authenticatedGlobal = true;
+                } else {
+                    this.authenticatedGlobal = false;
                 }
+
+            } catch (e) {
+                this.authenticatedGlobal = false;
             }
 
-
-            if (locationTopush && !areCredentialsOk) {
-                await router.push(locationTopush);
+            if (this.authenticatedGlobal === false && locationTopush !== null) {
+               await router.push(locationTopush);
             }
 
-            return areCredentialsOk;
         },
     }
 

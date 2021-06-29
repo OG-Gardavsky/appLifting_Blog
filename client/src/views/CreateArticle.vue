@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
         <div class="main" >
 
             <edit-article-page
@@ -45,6 +45,9 @@ export default {
                 this.setGenericError(this.genericError, true, 'unable to save article');
             }
         }
+    },
+    async created() {
+        await this.checkCredentials('/');
     }
 
 }
