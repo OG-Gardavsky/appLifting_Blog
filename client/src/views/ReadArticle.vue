@@ -1,12 +1,13 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
 
-        <div class="main">
+        <div class="main" v-if="articleDetails !== null && articleComments !== null">
 
             <!-- main article -->
             <h1>{{articleDetails.title}}</h1>
-            <img class="img-fluid" src="../assets/general_cat_image.jpg">
+            <author-date :name="articleDetails.authorName" :date="parseDate(articleDetails.ts)" />
+            <img class="img-fluid" src="../assets/general_cat_image.jpg" alt="general cat">
             <vue-markdown :source="articleDetails.content" />
             <hr/>
 
@@ -16,16 +17,16 @@
             <div>
 
                 <div class="form-group">
-                    <label class="d-flex" v-if=" newComment.content !== '' ">Your comment</label>
-                    <textarea class="form-control" v-model="newComment.content" placeholder="Join the discussion"
+                    <label class="d-flex" for="newCommentContent" v-if=" newComment.content !== '' ">Your comment</label>
+                    <textarea id="newCommentContent" class="form-control" v-model="newComment.content" placeholder="Join the discussion"
                               :rows="newComment.content === '' ? 1 : 4"/>
                 </div>
 
                 <div v-if=" newComment.content !== '' ">
 
                     <div class="form-group">
-                        <label class="d-flex">Your name</label>
-                        <input type="text" class="form-control" v-model="newComment.author" placeholder="Your name" >
+                        <label for="newCommentAuthor" class="d-flex">Your name</label>
+                        <input id="newCommentAuthor" type="text" class="form-control" v-model="newComment.author" placeholder="Your name" >
 
                     </div>
 
@@ -43,9 +44,9 @@
             <div class="d-flex flex-column comment"
                 :key="comment._id" v-for="comment in articleComments">
 
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row" >
                     <span class="font-weight-bold">{{comment.author}}</span>
-                    <span>{{comment.ts}}</span>
+                    <span style="padding: 0 10px">{{parseDate(comment.ts, true)}}</span>
                 </div>
 
                 <span>{{comment.content}}</span>
@@ -75,9 +76,11 @@
 import Navbar from "@/components/Navbar";
 import VueMarkdown from 'vue-markdown';
 import GenericError from "@/components/GenericError";
+import AuthorDate from "@/components/AuthorDate";
 export default {
     name: "ReadArticle",
     components: {
+        AuthorDate,
         GenericError,
         Navbar,
         VueMarkdown
@@ -94,6 +97,16 @@ export default {
         }
     },
     methods: {
+        parseDate (dateToParse, time = false) {
+            const date = new Date(dateToParse);
+            let dateString = `${date.getDate()}.${(date.getMonth() + 1)}.${date.getFullYear()}`;
+
+            if (time) {
+                dateString += ` ${date.getHours()}:${date.getMinutes()}`;
+            }
+
+            return dateString
+        },
         async getArticleDetails(articleId) {
             const res = await this.sendHttpRequest(`/articles/id:${articleId}`, 'GET', false);
 
@@ -142,6 +155,8 @@ export default {
         }
     },
     created() {
+        this.checkCredentials();
+
         this.articleId = this.$route.query.id
 
         this.getArticleDetails(this.articleId);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
 
         <form class="main card">
 
@@ -99,6 +99,9 @@ name: "Signup",
             }
 
         }
+    },
+    created() {
+        this.checkCredentials();
     }
 }
 </script>

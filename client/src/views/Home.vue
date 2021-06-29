@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
         <div class="main">
             <h1>Recent articles</h1>
             <generic-error :display="genericError.display" :text="genericError.text" />
@@ -11,23 +11,18 @@
 
                 <div class="d-flex flex-row article">
 
-                    <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250">
+                    <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250" alt="cat image">
 
                     <!-- text fields -->
                     <div class="d-flex flex-column">
                         <h3>{{article.title}}</h3>
-                        <span class="d-flex text-secondary date">
-                            <span>OG author</span>
-                            <span>•</span>
-                            <span>25.6.2021</span>
-                        </span>
+
+                        <author-date :date="parseDate(article.ts)" :name="article.authorName"/>
 
                         <span class="text-justify">{{article.perex}}</span>
 
                         <span class="comments-read">
                             <span class="text-primary">Read whole article</span>
-                            <!-- TODO -->
-                            <!-- sum of comments -->
                             <span class="text-secondary">{{article.countOfComments}} comment</span>
                         </span>
                     </div>
@@ -49,9 +44,11 @@
 import Navbar from "@/components/Navbar";
 import GenericError from "@/components/GenericError";
 import router from "@/router";
+import AuthorDate from "@/components/AuthorDate";
 export default {
     name: 'Home',
     components: {
+        AuthorDate,
         GenericError,
         Navbar
     },
@@ -70,10 +67,16 @@ export default {
         },
         goViewArticle(articleId) {
             router.push(`readArticle?id=${articleId}`);
-        }
+        },
+        parseDate (dateToParse) {
+            let date = new Date(dateToParse);
+            return `${date.getDate()}/${(date.getMonth() + 1)}/${date.getFullYear()}`;
+        },
     },
-    created() {
-        this.getListOfArticlesticles();
+
+    async created() {
+        await this.checkCredentials();
+        await this.getListOfArticlesticles();
     }
 }
 
@@ -94,13 +97,6 @@ export default {
                 margin-right: 20px;
             }
 
-            .date  {
-                span {
-                    margin-right: 10px;
-                }
-
-
-            }
 
             .comments-read {
                 span {

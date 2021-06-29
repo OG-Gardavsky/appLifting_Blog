@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <Navbar :authenticated="authenticatedGlobal"/>
 
         <form class="card main">
             <div class="col">
@@ -87,9 +87,9 @@ export default {
         }
     },
     async created() {
-        const authorized = await this.checkCredentials();
+        await this.checkCredentials();
 
-        if (authorized) {
+        if (this.authenticatedGlobal) {
             await router.push('/administration');
         }
     }
