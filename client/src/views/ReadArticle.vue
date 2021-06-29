@@ -6,7 +6,7 @@
 
             <!-- main article -->
             <h1>{{articleDetails.title}}</h1>
-            <author-date :name="articleDetails.authorName" :date="articleDetails.ts" />
+            <author-date :name="articleDetails.authorName" :date="parseDate(articleDetails.ts)" />
             <img class="img-fluid" src="../assets/general_cat_image.jpg" alt="general cat">
             <vue-markdown :source="articleDetails.content" />
             <hr/>
@@ -44,9 +44,9 @@
             <div class="d-flex flex-column comment"
                 :key="comment._id" v-for="comment in articleComments">
 
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row" >
                     <span class="font-weight-bold">{{comment.author}}</span>
-                    <span>{{comment.ts}}</span>
+                    <span style="padding: 0 10px">{{parseDate(comment.ts, true)}}</span>
                 </div>
 
                 <span>{{comment.content}}</span>
@@ -97,6 +97,16 @@ export default {
         }
     },
     methods: {
+        parseDate (dateToParse, time = false) {
+            const date = new Date(dateToParse);
+            let dateString = `${date.getDate()}.${(date.getMonth() + 1)}.${date.getFullYear()}`;
+
+            if (time) {
+                dateString += ` ${date.getHours()}:${date.getMinutes()}`;
+            }
+
+            return dateString
+        },
         async getArticleDetails(articleId) {
             const res = await this.sendHttpRequest(`/articles/id:${articleId}`, 'GET', false);
 

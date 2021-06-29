@@ -11,13 +11,13 @@
 
                 <div class="d-flex flex-row article">
 
-                    <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250">
+                    <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250" alt="cat image">
 
                     <!-- text fields -->
                     <div class="d-flex flex-column">
                         <h3>{{article.title}}</h3>
 
-                        <author-date :date="article.ts" :name="article.authorName"/>
+                        <author-date :date="parseDate(article.ts)" :name="article.authorName"/>
 
                         <span class="text-justify">{{article.perex}}</span>
 
@@ -67,7 +67,11 @@ export default {
         },
         goViewArticle(articleId) {
             router.push(`readArticle?id=${articleId}`);
-        }
+        },
+        parseDate (dateToParse) {
+            let date = new Date(dateToParse);
+            return `${date.getDate()}/${(date.getMonth() + 1)}/${date.getFullYear()}`;
+        },
     },
 
     async created() {
