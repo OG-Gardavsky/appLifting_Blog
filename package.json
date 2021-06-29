@@ -1,0 +1,22 @@
+{
+  "name": "cat_blog",
+  "version": "1.0.0",
+  "description": "simple blog supporting editing MD",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd server && npm install",
+    "start": "node server/src/app.js",
+    "devServer": "cd server && npm run dev",
+    "devClient": "cd client && npm run serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OG-Gardavsky/appLifting_Blog.git"
+  },
+  "author": "Ondrej Gardavsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OG-Gardavsky/appLifting_Blog/issues"
+  },
+  "homepage": "https://github.com/OG-Gardavsky/appLifting_Blog#readme"
+}

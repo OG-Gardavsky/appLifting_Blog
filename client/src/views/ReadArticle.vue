@@ -121,7 +121,7 @@ export default {
             }
 
             this.newComment.articleId = this.articleId;
-            const res = await this.sendHttpRequest(`comments`, 'POST', false, this.newComment);
+            const res = await this.sendHttpRequest(`/comments`, 'POST', false, this.newComment);
 
             if (res.status === 201) {
                 await this.getArticleComments(this.articleId);

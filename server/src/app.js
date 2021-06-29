@@ -11,6 +11,7 @@ const commentVotesRouter = require('./routers/commentVotes');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const publicDirectory = path.join(__dirname, '../../client/dist');
 
 
 app.use(helmet());
@@ -21,7 +22,7 @@ app.use(commentRouter);
 app.use(commentVotesRouter);
 
 
-
+app.use('/', express.static(publicDirectory));
 
 app.listen(port, () => {
     console.log('server is listening on port:' + port)
