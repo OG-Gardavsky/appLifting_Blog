@@ -77,7 +77,14 @@ export default {
         padding-top: 10px;
 
         .nav {
-            max-width: 60%;
+
+            @media (min-width: 768px) {
+                max-width: 70%;
+            }
+            @media (min-width: 1200px) {
+                max-width: 60%;
+            }
+
             margin: 0 auto;
             justify-content: space-between;
 

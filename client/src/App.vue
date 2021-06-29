@@ -14,13 +14,15 @@
 
 .main {
     margin: 30px auto;
+    padding: 0 10px;
 
     @media (min-width: 768px) {
-        max-width: 60%;
+        max-width: 70%;
     }
 
-
-
+    @media (min-width: 1200px) {
+        max-width: 60%;
+    }
 
     .actionIcon {
         margin: 10px;
