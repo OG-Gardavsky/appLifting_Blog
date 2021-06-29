@@ -11,7 +11,7 @@
 
                 <div class="d-flex flex-row article">
 
-                    <img class="rounded" src="../assets/general_cat_image_small.jpg" width="250" alt="cat image">
+                    <img class="rounded img-fluid" src="../assets/general_cat_image_small.jpg" width="250" alt="cat image">
 
                     <!-- text fields -->
                     <div class="d-flex flex-column">
@@ -19,7 +19,7 @@
 
                         <author-date :date="parseDate(article.ts)" :name="article.authorName"/>
 
-                        <span class="text-justify">{{article.perex}}</span>
+                        <span class="text-justify">{{shortenPerex(article.perex, 300)}}</span>
 
                         <span class="comments-read">
                             <span class="text-primary">Read whole article</span>

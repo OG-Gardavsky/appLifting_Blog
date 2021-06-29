@@ -3,28 +3,32 @@
         <div class="nav">
 
 
-            <span id="defaultLinks" class="d-flex flex-row">
-                <img alt="Cat logo" src="../assets/cat.png" width="60px">
-                <router-link to="/" class="routeLink">Recent Articles</router-link>
-                <router-link to="/about" class="routeLink">About</router-link>
-            </span>
+            <div class="d-flex flex-row">
+                <div>
+                    <img alt="Cat logo" src="../assets/cat.png" width="70px">
+                </div>
+                <router-link to="/" class="routeLink text-muted">Recent Articles</router-link>
+                <router-link to="/about" class="routeLink text-muted">About</router-link>
+            </div>
+
+            <div class="d-flex flex-row">
+                <router-link class="routeLink" to="/login" v-if="authenticated === false">
+                    Log in
+                    <i class="fas fa-arrow-right" />
+                </router-link>
+            </div>
 
 
-            <router-link to="/login" v-if="authenticated === false">
-                <span class="routeLink">Log in</span>
-                <i class="fas fa-arrow-right" />
-            </router-link>
 
-
-            <div id="loggedUserLinks" class="d-flex flex-row" v-if="authenticated === true">
+            <div class="d-flex flex-row" v-if="authenticated === true">
                 <router-link to="/administration" class="routeLink text-muted">My Articles</router-link>
                 <router-link to="/createArticle" class="routeLink">Create Article</router-link>
 
                 <!-- dropdown for log out -->
                 <div class="dropdown">
 
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                        <img src="../assets/cat.png" alt="Avatar" class="avatar">
+                    <button class="btn dropdown-toggle routeLink" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                        <i class="far fa-user" />
                     </button>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -73,31 +77,30 @@ export default {
         padding-top: 10px;
 
         .nav {
-            max-width: 70%;
+
+            @media (min-width: 768px) {
+                max-width: 70%;
+            }
+            @media (min-width: 1200px) {
+                max-width: 60%;
+            }
+
             margin: 0 auto;
             justify-content: space-between;
 
+            .dropdown {
+                margin: 0;
+                padding: 0;
+            }
+
+            .dropdown-toggle {
+                margin: 0;
+                padding: 0;
+            }
+
             .routeLink {
-                margin: 25px 10px;
+                margin-left: 20px ;
             }
-
-            #defaultLinks {
-                img {
-                    margin: 10px;
-                }
-            }
-
-            .fa-arrow-right {
-                margin: 10px 0;
-            }
-
-
-            .avatar {
-                width: 35px;
-                height: 35px;
-                border-radius: 50%;
-            }
-
 
         }
 

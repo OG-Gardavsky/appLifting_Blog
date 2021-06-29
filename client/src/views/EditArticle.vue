@@ -40,7 +40,7 @@ export default {
     methods: {
         async updateArticle(body) {
 
-            const res = await this.sendHttpRequest(`articles/id:${this.articleId}`, 'PUT', true, body);
+            const res = await this.sendHttpRequest(`/articles/id:${this.articleId}`, 'PUT', true, body);
 
             if (res.status === 200) {
                 await router.push('/administration');
@@ -50,7 +50,7 @@ export default {
         },
         async getArticleDetails() {
 
-            const res = await this.sendHttpRequest( `articles/id:${this.articleId}`, 'GET', false);
+            const res = await this.sendHttpRequest( `/articles/id:${this.articleId}`, 'GET', false);
 
             if (res.status === 200) {
                 this.articleDetails = await res.json();

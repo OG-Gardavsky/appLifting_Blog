@@ -77,7 +77,7 @@ name: "Signup",
                 password: this.password,
             };
 
-            const res = await this.sendHttpRequest('users', 'POST', false, body);
+            const res = await this.sendHttpRequest('/users', 'POST', false, body);
 
             let responseBody;
             if (res.status === 201) {

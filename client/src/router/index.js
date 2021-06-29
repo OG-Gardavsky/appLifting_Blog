@@ -8,6 +8,7 @@ import Administration from "@/views/Administration";
 import CreateArticle from "@/views/CreateArticle";
 import EditArticle from "@/views/EditArticle";
 import ReadArticle from "@/views/ReadArticle";
+import BlankPage from "@/views/BlankPage";
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
         path: '/readArticle',
         name: 'ReadArticle',
         component: ReadArticle
+    },
+    {
+        path: '/*',
+        name: 'blank',
+        component: BlankPage
     }
 ]
 

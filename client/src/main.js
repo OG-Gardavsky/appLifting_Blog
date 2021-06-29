@@ -17,6 +17,10 @@ Vue.mixin({
         }
     },
     methods: {
+        shortenPerex (perex, maxLength) {
+
+            return perex.length > maxLength ? perex.substring(0, maxLength) + '...' : perex;
+        },
         async sendHttpRequest(url, method, requiresAuth, body = null) {
 
 
@@ -28,7 +32,7 @@ Vue.mixin({
             //what contains method for sending http request
             const methodObject = body === null ? {method, headers} : { method, headers, body: JSON.stringify(body)};
 
-            const res = await fetch(`api/${url}`, methodObject);
+            const res = await fetch(`api${url}`, methodObject);
             return res;
         },
         setGenericError(incomingError ,visible, text) {
