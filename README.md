@@ -1,4 +1,4 @@
-# appLifting_Blog
+# cat_blog
 This is simple blogging system that receives input in Markdown format and displays it as is expected from MD
 - life demo ***<a href="https://gardavsky-catblog.herokuapp.com/">catblog on Heroku</a>*** 
   - takes a while to load (heroku free hosting) 
